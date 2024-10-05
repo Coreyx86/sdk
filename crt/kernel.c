@@ -59,11 +59,12 @@ const unsigned long KERNEL_OFFSET_PROC_P_UCRED = 0x40;
 const unsigned long KERNEL_OFFSET_PROC_P_FD    = 0x48;
 const unsigned long KERNEL_OFFSET_PROC_P_PID   = 0xBC;
 
-const unsigned long KERNEL_OFFSET_UCRED_CR_UID   = 0x04;
-const unsigned long KERNEL_OFFSET_UCRED_CR_RUID  = 0x08;
-const unsigned long KERNEL_OFFSET_UCRED_CR_SVUID = 0x0C;
-const unsigned long KERNEL_OFFSET_UCRED_CR_RGID  = 0x14;
-const unsigned long KERNEL_OFFSET_UCRED_CR_SVGID = 0x18;
+const unsigned long KERNEL_OFFSET_UCRED_CR_UID     = 0x04;
+const unsigned long KERNEL_OFFSET_UCRED_CR_RUID    = 0x08;
+const unsigned long KERNEL_OFFSET_UCRED_CR_SVUID   = 0x0C;
+const unsigned long KERNEL_OFFSET_UCRED_CR_NGROUPS = 0x10;
+const unsigned long KERNEL_OFFSET_UCRED_CR_RGID    = 0x14;
+const unsigned long KERNEL_OFFSET_UCRED_CR_SVGID   = 0x18;
 
 const unsigned long KERNEL_OFFSET_UCRED_CR_SCEAUTHID = 0x58;
 const unsigned long KERNEL_OFFSET_UCRED_CR_SCECAPS   = 0x60;
@@ -753,6 +754,22 @@ kernel_set_ucred_svuid(int pid, unsigned int svuid) {
 
   if(kernel_copyin(&svuid, ucred + KERNEL_OFFSET_UCRED_CR_SVUID,
 		   sizeof(svuid))) {
+    return -1;
+  }
+
+  return 0;
+}
+
+int
+kernel_set_ucred_ngroups(int pid, unsigned int ngroups) {
+  unsigned long ucred = 0;
+
+  if(!(ucred=kernel_get_proc_ucred(pid))) {
+    return -1;
+  }
+
+  if(kernel_copyin(&ngroups, ucred + KERNEL_OFFSET_UCRED_CR_NGROUPS,
+                   sizeof(ngroups))) {
     return -1;
   }
 

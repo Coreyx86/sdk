@@ -38,6 +38,7 @@ extern const off_t KERNEL_OFFSET_PROC_P_PID;
 extern const off_t KERNEL_OFFSET_UCRED_CR_UID;
 extern const off_t KERNEL_OFFSET_UCRED_CR_RUID;
 extern const off_t KERNEL_OFFSET_UCRED_CR_SVUID;
+extern const off_t KERNEL_OFFSET_UCRED_CR_NGROUPS;
 extern const off_t KERNEL_OFFSET_UCRED_CR_RGID;
 extern const off_t KERNEL_OFFSET_UCRED_CR_SCEAUTHID;
 extern const off_t KERNEL_OFFSET_UCRED_CR_SCECAPS;
@@ -90,6 +91,7 @@ int32_t  kernel_set_proc_jaildir(pid_t pid, intptr_t vnode);
 int32_t kernel_set_ucred_uid(pid_t pid, uid_t uid);
 int32_t kernel_set_ucred_ruid(pid_t pid, uid_t ruid);
 int32_t kernel_set_ucred_svuid(pid_t pid, uid_t svuid);
+int32_t kernel_set_ucred_ngroups(pid_t pid, uid_t ngroups);
 
 int32_t kernel_set_ucred_rgid(pid_t pid, gid_t rgid);
 int32_t kernel_set_ucred_svgid(pid_t pid, gid_t svgid);
